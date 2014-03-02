@@ -19,9 +19,10 @@ if ($handle === false){
     die ("ERROR: could not open input file {$filename}");
 }
 
+$palendromeSum = 0;
 $header = false;
-$output = array();
-$notqualified = array();
+$palendromes = array();
+$nonPalendromes = array();
 $invalidOperators = array();
 $invalidOperands = array();
 
@@ -60,12 +61,13 @@ while (($line = fgets($handle)) !== FALSE) {
             }
 
             // if it is a palendrome (reads the same same forward & backward)
-            // then add it to the output array
+            // then add it to the palendrome array
             $reversed = strrev($result);
             if ($reversed == $result){
-                $output[] = $result;
+                $palendromes[] = $result;
+                $palendromeSum += $result;
             } else {
-                $notqualified[] = $result;
+                $nonPalendromes[] = $result;
             }
         } else {
             // something wrong with one of the operands
@@ -81,11 +83,12 @@ fclose($handle);
 
 //  output 
 echo $header;
-echo implode("\n", $output);
+echo implode("\n", $palendromes);
+echo "\ntotal: {$palendromeSum}\n";
 
 if (DEBUG){
     echo "\n/* ========================= NON-Palindrome results ===================== */\n";
-    echo implode("\n", $notqualified);
+    echo implode("\n", $nonPalendromes);
     echo "\n/* ========================= invalid operators ===================== */\n";
     echo implode('', $invalidOperators);
     echo "\n/* ========================= invalid operands ===================== */\n";
