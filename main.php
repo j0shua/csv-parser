@@ -40,8 +40,8 @@ while (($line = fgets($handle)) !== FALSE) {
         // split the line on the operator
         $data = explode($operator, $line);
     
+        // validate and put oprands into normal whitespace free form
         if (($operands = validateOperands($data)) !== false){
-            //echo "{$operands[0]} {$operator} {$operands[1]}\n";
 
             // perform calculation
             switch ($operator){
@@ -59,7 +59,7 @@ while (($line = fgets($handle)) !== FALSE) {
                     break;
             }
 
-            // if it is a palendrome (same forward / backward)
+            // if it is a palendrome (reads the same same forward & backward)
             // then add it to the output array
             $reversed = strrev($result);
             if ($reversed == $result){
@@ -87,12 +87,10 @@ if (DEBUG){
     echo "\n/* ========================= NON-Palindrome results ===================== */\n";
     echo implode("\n", $notqualified);
     echo "\n/* ========================= invalid operators ===================== */\n";
-    echo implode("\n", $invalidOperators);
+    echo implode('', $invalidOperators);
     echo "\n/* ========================= invalid operands ===================== */\n";
-    echo implode("\n", $invalidOperands);
+    echo implode('', $invalidOperands);
 }
 
 // thats all folks
 exit;
-
-
